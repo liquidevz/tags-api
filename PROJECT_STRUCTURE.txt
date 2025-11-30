@@ -1,0 +1,60 @@
+.
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── Dockerfile
+├── PROJECT_STRUCTURE.txt
+├── README.md
+├── docker-compose.yml
+├── docs
+│   ├── API_GUIDE.md
+│   ├── ARCHITECTURE.md
+│   └── DEPLOYMENT.md
+├── ecosystem.config.js
+├── logs
+├── package.json
+├── scripts
+├── src
+│   ├── app.js
+│   ├── config
+│   │   ├── config.js
+│   │   ├── database.js
+│   │   ├── redis.js
+│   │   └── swagger.js
+│   ├── controllers
+│   │   ├── categoryController.js
+│   │   └── tagController.js
+│   ├── database
+│   │   ├── migrations
+│   │   └── seeds
+│   │       └── seed.js
+│   ├── middlewares
+│   │   ├── auth.js
+│   │   ├── cache.js
+│   │   ├── errorHandler.js
+│   │   ├── notFound.js
+│   │   ├── rateLimiter.js
+│   │   └── requestLogger.js
+│   ├── models
+│   │   ├── Category.js
+│   │   ├── Tag.js
+│   │   └── User.js
+│   ├── routes
+│   │   └── v1
+│   │       ├── categoryRoutes.js
+│   │       ├── index.js
+│   │       └── tagRoutes.js
+│   ├── server.js
+│   ├── services
+│   ├── utils
+│   │   ├── appError.js
+│   │   ├── catchAsync.js
+│   │   └── logger.js
+│   └── validators
+│       ├── categoryValidator.js
+│       └── tagValidator.js
+└── tests
+    ├── e2e
+    ├── integration
+    └── unit
+
+20 directories, 37 files

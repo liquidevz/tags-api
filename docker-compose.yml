@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # API Service
+  api:
+    build: .
+    container_name: tags-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/tags-api
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - tags-network
+    volumes:
+      - ./logs:/app/logs
+
+  # MongoDB Service
+  mongo:
+    image: mongo:7
+    container_name: tags-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=tags-api
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - tags-network
+
+  # Redis Service
+  redis:
+    image: redis:7-alpine
+    container_name: tags-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - tags-network
+
+  # Nginx (Optional - for load balancing)
+  nginx:
+    image: nginx:alpine
+    container_name: tags-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    networks:
+      - tags-network
+
+networks:
+  tags-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  redis-data:
