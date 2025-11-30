@@ -16,6 +16,8 @@
     "format": "prettier --write \"src/**/*.js\"",
     "migrate": "node src/database/migrations/migrate.js",
     "seed": "node src/database/seeds/seed.js",
+    "seed:large": "node src/database/seeds/seed-large.js",
+    "seed:10m": "node src/database/seeds/seed-10m.js",
     "build": "echo 'Build process for production'",
     "docker:build": "docker build -t tags-api .",
     "docker:run": "docker-compose up -d",
