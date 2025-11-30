@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: tags-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - tags-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: tags-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - tags-network
+
+  api:
+    build: .
+    container_name: tags-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/tags-api
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=production-secret-change-this-in-real-deployment
+      - ENABLE_SWAGGER=true
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - tags-network
+
+networks:
+  tags-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  redis-data:
