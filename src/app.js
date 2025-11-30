@@ -66,6 +66,23 @@ app.use(requestLogger);
 // Rate limiting
 app.use('/api/', rateLimiter);
 
+// Root endpoint - redirect to API docs
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to Tags API',
+    version: '1.0.0',
+    documentation: '/api/v1/docs',
+    endpoints: {
+      health: '/health',
+      api: '/api/v1',
+      docs: '/api/v1/docs',
+      tags: '/api/v1/tags',
+      categories: '/api/v1/categories'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
